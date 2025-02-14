@@ -1,4 +1,4 @@
-from pynes.writer import Writer
+from pynes.core import Writer
 from time import sleep
 
 writeline = Writer().createStdIoWriter()

@@ -1,6 +1,5 @@
 import os, asyncio, pytest, threading, time
-from ..reader import Reader
-from ..writer import Writer
+from ..core import Writer, Reader
 from ..common import completedTask
 
 '''

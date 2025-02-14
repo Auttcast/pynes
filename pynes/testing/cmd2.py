@@ -1,4 +1,4 @@
-from pynes.reader import Reader
+from pynes.core import Reader
 
 readline = Reader().create()
 for line in readline():
