@@ -1,6 +1,7 @@
 import os, sys
 from .common import ENV_NL
 
+#really only need this for testing...
 def create_writer(file_descriptor_id:int=None):
   if file_descriptor_id is None: file_descriptor_id = sys.stdout.fileno()
 

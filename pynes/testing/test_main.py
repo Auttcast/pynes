@@ -5,6 +5,8 @@ from ..writer import create_writer
 '''
 NOTE
 cannot pytest on std io (redirects to pseudofile w/ no fileid)
+
+testing file descriptors in multiple threads on windows does not work
 '''
 
 # (rfd, wfd) = os.pipe2(os.O_CLOEXEC)
