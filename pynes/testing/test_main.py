@@ -1,10 +1,10 @@
-import os, time, threading, asyncio, pytest
+import os, asyncio, pytest
 from ..reader import Reader
 from ..writer import Writer
 
 '''
 NOTE
-cannot pytest on std io (redirects to pseudofile w/ no fileid)
+cannot pytest on std io (redirects to pseudofile w/ no fileid), but can use custom fd
 
 testing file descriptors in multiple threads on windows does not work - async?
 '''
