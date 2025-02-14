@@ -24,14 +24,19 @@ class Writer:
     writelineFuncAsync = self.__createIoWriterAsync(useStdErr=True)
     return writelineFuncAsync
 
-  def __createIoWriter(self, useStdErr=False):
-
+  def __setupWriter(self, useStdErr:bool):
     sysStream = None
     if self.file_descriptor_id is None:
       sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
 
     fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
     writeHandle = os.fdopen(fid, mode='w')
+
+    return writeHandle
+
+  def __createIoWriter(self, useStdErr=False):
+
+    writeHandle = self.__setupWriter(useStdErr)
 
     def writeline(line:str):
       writeHandle.write(f"{line}{ENV_NL}")
@@ -41,12 +46,7 @@ class Writer:
     
   def __createIoWriterAsync(self, useStdErr=False):
 
-    sysStream = None
-    if self.file_descriptor_id is None:
-      sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
-
-    fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
-    writeHandle = os.fdopen(fid, mode='w')
+    writeHandle = self.__setupWriter(useStdErr)
 
     def writeline(line:str):
       writeHandle.write(f"{line}{ENV_NL}")

@@ -1,4 +1,4 @@
-import os, sys, msvcrt, asyncio
+import os, sys, asyncio
 from typing import Iterable
 from .common import *
 
@@ -12,7 +12,8 @@ class Reader:
 
     readHandle = os.fdopen(self.file_descriptor_id, mode='r')
 
-    if IS_WINDOWS: 
+    if IS_WINDOWS:
+      import msvcrt
       #NOTES
       #msvcrt.get_osfhandle affects sys.stdin INDIRECTLY
       #msvcrt.get_osfhandle does not working within closure
@@ -46,14 +47,13 @@ class Reader:
     else:
       return nix_read_factory()
 
-
-
   async def createAsync(self):
     
     if self.file_descriptor_id is None: self.file_descriptor_id = sys.stdin.fileno()
     readHandle = os.fdopen(self.file_descriptor_id, mode='r')
 
-    if IS_WINDOWS: 
+    if IS_WINDOWS:
+      import msvcrt
       #NOTES
       #msvcrt.get_osfhandle affects sys.stdin INDIRECTLY
       #msvcrt.get_osfhandle does not working within closure
@@ -67,7 +67,7 @@ class Reader:
         if readHandle.readable():
           while True:
             
-            bytes_read = asyncio.to_thread(lambda: os.readv(readHandle.fileno(), buffArrCont))
+            bytes_read = await asyncio.to_thread(lambda: os.readv(readHandle.fileno(), buffArrCont))
             line = buffArr[:bytes_read].decode()
             if bytes_read == 0: break
             for l in line[:-1].split(ENV_NL):
