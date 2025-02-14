@@ -29,7 +29,8 @@ class Writer:
     if self.file_descriptor_id is None:
       sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
 
-    fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
+    fid = self.file_descriptor_id or sysStream
+    print(f'using FID: {fid}')
     writeHandle = os.fdopen(fid, mode='w')
 
     return writeHandle

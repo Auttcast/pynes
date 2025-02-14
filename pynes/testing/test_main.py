@@ -5,13 +5,11 @@ from ..common import completedTask
 
 '''
 NOTE
-cannot pytest on std io (redirects to pseudofile w/ no fileid), but can use custom fd
+cannot pytest on std io, hence os.pipe is used in it's place
 '''
 
-#def getPipe(): return os.pipe2(os.O_CLOEXEC)
 def getPipe(): return os.pipe()
 
-#@pytest.mark.skipif(sys.platform == "win32", reason="Windows-only test")
 def main_base(isDelayed:bool=False):
 
   reads = []
