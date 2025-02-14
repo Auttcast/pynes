@@ -39,13 +39,13 @@ async def asynchronousReader():
 
 ```
 
-### Combine commands
+### Remember, you're just a number
 
-```python
-
-```
+  ![x](https://raw.githubusercontent.com/Auttcast/pynes/refs/heads/master/console.png)
 
 
 ### Built on 
+
 Python 3.12.8
+
 pytest 8.3.4
