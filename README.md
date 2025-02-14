@@ -6,7 +6,6 @@ pip install pynes (todo)
 An easy-to-use api for accessing python's sys.stdio and sys.stderr streams. Consistently line-buffered with asynchronous support.
 
 Pynes has built-in support for windows with the msvcrt library.
--acC
 
 ### Write to std io
 
