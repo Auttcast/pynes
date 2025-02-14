@@ -3,12 +3,12 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pynes"
+name = "pynes_io"
 version = "1.0.0"
 authors = [
   { name="Brandon McCartney", email="auttcast@gmail.com" },
 ]
-description = "in-line functional composition"
+description = "easy standard io line buffering"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -23,3 +23,5 @@ license-files = ["LICENSE.txt"]
 Homepage = "https://github.com/Auttcast/pynes"
 Issues = "https://github.com/Auttcast/pynes/issues"
 
+[tool.hatch.build.targets.wheel]
+packages = []
