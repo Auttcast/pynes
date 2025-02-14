@@ -30,7 +30,6 @@ class Writer:
       sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
 
     fid = self.file_descriptor_id or sysStream
-    print(f'using FID: {fid}')
     writeHandle = os.fdopen(fid, mode='w')
 
     return writeHandle
