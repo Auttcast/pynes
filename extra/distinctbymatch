@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+import typer, re, asyncio, time
+from pynes.core import Reader
+from pprint import pprint
+
+def doPrint(data):
+    pprint(sorted(data))
+
+lastTime = time.time()
+
+def oncePerSecond():
+    global lastTime
+    currentTime = time.time()
+    trigger = (currentTime - lastTime) > 1
+    if trigger: lastTime = currentTime
+    return trigger
+
+async def asyncCommand(regex:str = None, continuous:bool = None):
+    readeline = await Reader().createAsync()
+    data = set()
+    async for line in readeline():
+        matches = re.findall(regex, line)
+        for match in matches:
+            data.add(match)
+
+        if continuous and oncePerSecond():
+            doPrint(data)
+    doPrint(data) #exit
+
+app = typer.Typer()
+@app.command()
+def new_commnad(regex:str, cont:bool=False):
+    '''<command> "regex match", isContinuous (refresh every second)'''
+
+    asyncio.run(asyncCommand(regex, cont))
+
+if __name__ == "__main__":
+    app()
