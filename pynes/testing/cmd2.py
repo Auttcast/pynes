@@ -1,6 +1,6 @@
-from pynes.reader import create_reader
+from pynes.reader import Reader
 
-readline = create_reader()
+readline = Reader().create()
 for line in readline():
   print(f"got line: {line}")
 
