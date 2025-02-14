@@ -26,7 +26,9 @@ class Writer:
 
   def __createIoWriter(self, useStdErr=False):
 
-    sysStream = sys.stdout.fileno() if not useStdErr else sys.stdout.fileno()
+    sysStream = None
+    if self.file_descriptor_id is None:
+      sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
 
     fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
     writeHandle = os.fdopen(fid, mode='w')
@@ -39,7 +41,9 @@ class Writer:
     
   def __createIoWriterAsync(self, useStdErr=False):
 
-    sysStream = sys.stdout.fileno() if not useStdErr else sys.stdout.fileno()
+    sysStream = None
+    if self.file_descriptor_id is None:
+      sysStream = sys.stdout.fileno() if not useStdErr else sys.stderr.fileno()
 
     fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
     writeHandle = os.fdopen(fid, mode='w')
