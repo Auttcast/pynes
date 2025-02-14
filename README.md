@@ -1,5 +1,5 @@
 ```
-pip install pynes (todo)
+pip install pynes_io (todo)
 ```
 
 ## Hack your console with Pynes
