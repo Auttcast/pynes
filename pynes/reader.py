@@ -38,7 +38,7 @@ class Reader:
     def win_read_factory():
       def readlines() -> Iterable:
         for line in readHandle:
-          yield line
+          yield line[:-1]
 
       return readlines
 
