@@ -1,6 +1,6 @@
 import os, time, threading, asyncio, pytest
 from ..reader import Reader
-from ..writer import create_writer
+from ..writer import Writer
 
 '''
 NOTE
@@ -24,11 +24,11 @@ async def test_main():
 
   writes = []
   async def exec_writer(fd):
-    writeline = create_writer(fd)
+    writelineAsync = Writer(fd).createStdIoWriterAsync()
     for i in range(1, 4):
       message = f"test {i}"
       writes.append(message)
-      writeline(message)
+      await writelineAsync(message)
 
     res = asyncio.Future()
     res.set_result(None)
@@ -55,12 +55,12 @@ async def test_main_delayed_start():
 
   writes = []
   async def exec_writer(fd):
-    writeline = create_writer(fd)
+    writelineAsync = Writer(fd).createStdIoWriterAsync()
     await asyncio.sleep(1)
     for i in range(1, 4):
       message = f"test {i}"
       writes.append(message)
-      writeline(message)
+      await writelineAsync(message)
 
     res = asyncio.Future()
     res.set_result(None)

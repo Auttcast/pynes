@@ -1,13 +1,52 @@
-import os, sys
+import os, sys, asyncio
 from .common import ENV_NL
 
-#really only need this for testing...
-def create_writer(file_descriptor_id:int=None):
-  if file_descriptor_id is None: file_descriptor_id = sys.stdout.fileno()
+class Writer:
 
-  w = os.fdopen(file_descriptor_id, mode='w')
+  def __init__(self, file_descriptor_id:int=None):
+    self.file_descriptor_id:int = file_descriptor_id
 
-  def writeline(line:str):
-    w.write(f"{line}{ENV_NL}")
-    w.flush()
-  return writeline
+  def createStdIoWriter(self):
+    writelineFunc = self.__createIoWriter()
+    return writelineFunc
+
+  def createStdErrWriter(self):
+    '''only supported when file_descriptor_id is None'''
+    writelineFunc = self.__createIoWriter(useStdErr=True)
+    return writelineFunc
+
+  def createStdIoWriterAsync(self):
+    writelineFuncAsync = self.__createIoWriterAsync()
+    return writelineFuncAsync
+  
+  def createStdErrWriterAsync(self):
+    '''only supported when file_descriptor_id is None'''
+    writelineFuncAsync = self.__createIoWriterAsync(useStdErr=True)
+    return writelineFuncAsync
+
+  def __createIoWriter(self, useStdErr=False):
+
+    sysStream = sys.stdout.fileno() if not useStdErr else sys.stdout.fileno()
+
+    fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
+    writeHandle = os.fdopen(fid, mode='w')
+
+    def writeline(line:str):
+      writeHandle.write(f"{line}{ENV_NL}")
+      writeHandle.flush()
+
+    return writeline
+    
+  def __createIoWriterAsync(self, useStdErr=False):
+
+    sysStream = sys.stdout.fileno() if not useStdErr else sys.stdout.fileno()
+
+    fid = self.file_descriptor_id if self.file_descriptor_id is not None else sysStream
+    writeHandle = os.fdopen(fid, mode='w')
+
+    def writeline(line:str):
+      writeHandle.write(f"{line}{ENV_NL}")
+      writeHandle.flush()
+
+    return lambda line: asyncio.to_thread(lambda: writeline(line))
+  
