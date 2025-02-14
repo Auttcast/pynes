@@ -8,8 +8,8 @@ NOTE
 cannot pytest on std io (redirects to pseudofile w/ no fileid), but can use custom fd
 '''
 
-def getPipe(): return os.pipe2(os.O_CLOEXEC)
-#def getPipe(): return os.pipe()
+#def getPipe(): return os.pipe2(os.O_CLOEXEC)
+def getPipe(): return os.pipe()
 
 #@pytest.mark.skipif(sys.platform == "win32", reason="Windows-only test")
 def test_main():
