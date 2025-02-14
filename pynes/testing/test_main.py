@@ -51,8 +51,7 @@ async def main_base_async(isDelayed:bool=False):
   reads = []
   async def exec_reader(fd):
     readlines = await Reader(fd).createAsync()
-    gen = readlines()
-    async for line in gen:
+    async for line in readlines():
       reads.append(line)
 
   writes = []

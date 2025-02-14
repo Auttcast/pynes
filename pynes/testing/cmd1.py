@@ -1,6 +1,6 @@
 from pynes.core import Writer
 from time import sleep
-
+Writer.createStdIoWriterAsync()
 writeline = Writer().createStdIoWriter()
 writeError = Writer().createStdErrWriter()
 
